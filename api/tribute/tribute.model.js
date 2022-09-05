@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const Tribute = mongoose.model('Tribute', {
+    games: [{ type: mongoose.Schema.ObjectId, ref: 'Game' }],
     name: {
         type: String,
         required: true,

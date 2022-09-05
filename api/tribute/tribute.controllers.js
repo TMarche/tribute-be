@@ -33,12 +33,28 @@ module.exports = {
             });
     },
     getTribute: (req, res) => {
-        res.send({ status: 'OK -- got tribute' });
+        mongoose.connect('mongodb://127.0.0.1:27017/tribute');
+        Tribute.findById(req.params.id)
+            .exec()
+            .then((result) => {
+                res.status(200).send({ tribute: result });
+            })
+            .catch((error) => {
+                console.log('ERROR!', error);
+                res.status(500).send({ error: 'OOPS! An error occurred!' });
+            });
     },
     updateTribute: (req, res) => {
         res.send({ status: 'OK -- updated tribute' });
     },
     deleteTribute: (req, res) => {
-        res.send({ status: 'OK -- deleted tribute' });
+        mongoose.connect('mongodb://127.0.0.1:27017/tribute');
+        Tribute.findByIdAndRemove(req.params.id)
+            .exec()
+            .then(res.status(200).send())
+            .catch((error) => {
+                console.log('ERROR!', error);
+                res.status(500).send({ error: 'OOPS! An error occurred!' });
+            });
     },
 };
